@@ -1,15 +1,32 @@
 const express = require('express');
-const connectDb = require("./config/db");
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
+mongoose.connect(`mongodb+srv://nadiop97:Ynover_97@cluster0.wq4ds.mongodb.net/medical-ws?retryWrites=true&w=majority`, 
+  {
+    useNewUrlParser: true
+  }).then(() => {
+    console.log("Successfully connected to the database 💾✔️");    
+  }).catch(err => {
+    console.log('Could not connect to the database. Error... 💾❌', err);
+    process.exit();
+  });
 
 const app = express();
-connectDb();
 
+app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use(express.json());
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+    res.json({"message": "Server is running 🚀"});
 });
 
-app.listen(process.env.PORT || 5000, () => console.log('Up and running 🚀'));
+let PORT = 8080
+
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT} 🚀 `);
+});
+
+

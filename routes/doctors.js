@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
-let { getAllDoctors, getDoctorById, addDoctor, updateDoctor, removeDoctor } = require('../controllers/doctorController')
+const Doctor = require('../models/doctor');
 
 
+let { getAllDoctors, getDoctorById, addDoctor, updateDoctor, removeDoctor } = require('../controllers/doctorController');
+
+/*
 router.get('/', async (req, res) => {
     let response = await getAllDoctors(req.query.s, req.query.page, req.query.limit);
     if (response.success == true) {
@@ -11,7 +14,7 @@ router.get('/', async (req, res) => {
         res.status(404).json(response);
     }
 });
-
+*/
 
 router.get('/:doctorId', async (req, res) => {
     let response = await getDoctorById(req.params.doctorId);
@@ -41,7 +44,7 @@ router.put('/:doctorId', async (req, res) => {
     if (req.body.doctorName) {doctorName = req.body.doctorName}
     if (req.body.speciality) {speciality = req.body.speciality}
     if (req.body.sexe) {sexe = req.body.sexe}
-    let response = await updateCatchphrase(req.params.doctorId, doctorName, speciality, sexe);
+    let response = await updateDoctor(req.params.doctorId, doctorName, speciality, sexe);
 
     if (response.success == true) {
         res.status(201).json(response);

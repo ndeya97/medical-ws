@@ -1,14 +1,15 @@
 const Doctor = require('../models/doctor');
 
 async function getAllDoctors(search, reqPage, reqLimit) {
+    
     let options = {};
 
     if (search) {
         options = {
             ...options,
             $or: [
-                {doctorId: new RegExp(search.toString(), 'i')},
-                {doctorName: new RegExp(search.toString(), 'i')}
+                {doctorName: new RegExp(search.toString(), 'i')},
+                {speciality: new RegExp(search.toString(), 'i')},
             ]
         }
     }
@@ -66,10 +67,10 @@ async function addDoctor(body) {
     }
 }
 
-async function updateDoctor(doctorId, doctorName = null, reqSpeciality = null, sexe = null) {
+async function updateDoctor(id, doctorName = null, reqSpeciality = null, sexe = null) {
     let doctor;
     try {
-        doctor = await Doctor.findById(doctorId);
+        doctor = await Doctor.findById(id);
         if (doctor == null) {
             return { success: false, message: 'Cannot find doctor' };
         }
@@ -98,10 +99,10 @@ async function updateDoctor(doctorId, doctorName = null, reqSpeciality = null, s
     }
 }
 
-async function removeDoctor(doctorId) {
+async function removeDoctor(id) {
     let doctor;
     try {
-        doctor = await Doctor.findById(doctorId);
+        doctor = await Doctor.findById(id);
         if (doctor == null) {
             return { success: false, message: 'Cannot find doctor' };
         }
