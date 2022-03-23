@@ -29,6 +29,7 @@ async function getDoctorById(id) {
 	};
 }
 
+// AddDoctor
 async function addDoctor(body) {
 	const doctor = new Doctor(body);
 
@@ -43,7 +44,7 @@ async function addDoctor(body) {
 	}
 }
 
-async function updateDoctor(id, doctorName = null, speciality = null, sexe = null) {
+async function updateDoctor(id, doctorName = null, speciality = null, sexe = null, city = null) {
 	let doctor;
 	try {
 		doctor = await Doctor.findById(id);
@@ -58,6 +59,9 @@ async function updateDoctor(id, doctorName = null, speciality = null, sexe = nul
 		}
 		if (sexe != null) {
 			doctor.sexe = sexe
+		}
+		if (city != null) {
+			doctor.city = city
 		}
 
 		try {
@@ -96,6 +100,8 @@ async function removeDoctor(id) {
 		return { success: false, message: err.message };
 	}
 }
+
+
 
 module.exports = {
 	getAllDoctors,

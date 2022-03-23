@@ -11,6 +11,10 @@ const doctorSchema = new Schema({
 	sexe: {
 		type: String,
 	},
+	city: {
+		type: String,
+	},
+	patients: [{idPatient: Number, namePatient: String}],
 });
 
 const Doctor = mongoose.model('Doctor', doctorSchema);

@@ -57,6 +57,8 @@ router.get('/:id', async (req, res) => {
  *              type: string
  *            sexe:
  *              type: string
+ *            city:
+ *              type: string
  *     responses:
  *       201:
  *         description: Created
@@ -66,6 +68,7 @@ router.post('/', async (req, res) => {
 		doctorName: req.body.doctorName,
 		speciality: req.body.speciality,
 		sexe: req.body.sexe,
+		city: req.body.city,
 	};
 	let response = await addDoctor(body);
 
@@ -98,16 +101,20 @@ router.post('/', async (req, res) => {
  *              type: string
  *            sexe:
  *              type: string
+ *            city:
+ *              type: string
  *     responses:
  *       201:
  *         description: Created
  */
 router.put('/:id', async (req, res) => {
-	let doctorName = null, speciality = null, sexe = null;
+	let doctorName = null, speciality = null, sexe = null, city = null;
 	if (req.body.doctorName) {doctorName = req.body.doctorName}
 	if (req.body.speciality) {speciality = req.body.speciality}
 	if (req.body.sexe) {sexe = req.body.sexe}
-	let response = await updateDoctor(req.params.id, doctorName, speciality, sexe);
+	if (req.body.city) {city = req.body.city}
+
+	let response = await updateDoctor(req.params.id, doctorName, speciality, sexe, city);
 
 	if (response.success == true) {
 		res.status(201).json(response);
