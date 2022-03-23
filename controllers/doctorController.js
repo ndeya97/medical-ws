@@ -1,38 +1,15 @@
 const Doctor = require('../models/doctor');
 
-async function getAllDoctors(search, reqPage, reqLimit) {
-	let options = {};
-
-	if (search) {
-		options = {
-			...options,
-			$or: [
-				{doctorName: new RegExp(search.toString(), 'i')},
-				{speciality: new RegExp(search.toString(), 'i')}
-			]
-		}
-	}
-
-	let total = Doctor.countDocuments(options);
-	let page = parseInt(reqPage) || 1;
-	let limit = parseInt(reqLimit) || parseInt(await total);
-	let last_page = Math.ceil(parseInt(await total)/limit);
-	if (last_page < 1 && total > 0) {
-		last_page = 1
-	}
-
-	try {
-		const doctor = await Doctor.find(options).skip((page - 1) * limit).limit(limit);
-		return {
-			success: true,
-			data: doctor,
-			total: (await total).toString(),
-			page: (await page).toString(),
-			last_page: (await last_page).toString(),
-		};
-	} catch (err) {
-		return { success: false, message: "Doctors not found" };
-	}
+ function getAllDoctors (req,res) {
+	Doctor.find()
+	.then(doctors => {
+		res.send(doctors);
+		console.log(doctors);
+	}).catch (err => {
+		res.status(500).send({
+			message: err.message || "Doctors not found"
+	});
+  });	
 }
 
 async function getDoctorById(id) {

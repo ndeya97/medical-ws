@@ -12,7 +12,7 @@ let { getAllDoctors, getDoctorById, addDoctor, updateDoctor, removeDoctor } = re
  *         description: Returns all the doctors
  */
 router.get('/', async (req, res) => {
-	let response = await getAllDoctors(req.query.s, req.query.page, req.query.limit);
+	let response = await getAllDoctors(req,res);
 	if (response.success == true) {
 		res.status(200).json(response);
 	} else {
