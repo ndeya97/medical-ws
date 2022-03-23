@@ -1,32 +1,28 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-
-mongoose.Promise = global.Promise;
-mongoose.connect(`mongodb+srv://nadiop97:Ynover_97@cluster0.wq4ds.mongodb.net/medical-ws?retryWrites=true&w=majority`, 
-  {
-    useNewUrlParser: true
-  }).then(() => {
-    console.log("Successfully connected to the database 💾✔️");    
-  }).catch(err => {
-    console.log('Could not connect to the database. Error... 💾❌', err);
-    process.exit();
-  });
+const connectDb = require("./config/db");
+const { doctors } = require("./routes/index");
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const app = express();
+connectDb();
 
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.json());
 
-app.use(bodyParser.json())
+const swaggerOptions = {
+	swaggerDefinition: {
+		info: {
+			title: 'Medical-ws REST API',
+			description: "A REST API built with Express and MongoDB. This API provides the repository management of healthcare professionals."
+		},
+	},
+	apis: ["./routes/doctors.js"]
+}
 
-app.get('/', (req, res) => {
-    res.json({"message": "Server is running 🚀"});
-});
+app.use('/doctors', doctors)
 
-let PORT = 8080
-
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT} 🚀 `);
-});
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
+app.listen(process.env.PORT || 5000, () => console.log('Up and run at PORT 5000 ✔️'));
