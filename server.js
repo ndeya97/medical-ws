@@ -25,4 +25,4 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
-app.listen(process.env.PORT || 5000, () => console.log('Up and run at PORT 5000 ✔️'));
+app.listen(process.env.PORT || 5000, () => console.log('Up and run at PORT 5000 🚀✔️'));
