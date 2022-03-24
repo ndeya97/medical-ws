@@ -31,8 +31,11 @@ router.post('/', async (req, res) => {
 
 	if (response.success == true) {
 		res.status(201).json(response);
+		console.log(response);
 	} else {
 		res.status(404).json(response);
+		console.log(response);
+
 	}
 });
 

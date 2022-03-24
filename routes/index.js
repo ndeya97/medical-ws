@@ -1,6 +1,6 @@
 const doctors = require('./doctors')
-const patients = require('./patientS')
+const patients = require('./patients')
 module.exports = {
 	doctors,
-	patients
+	patients,
 }

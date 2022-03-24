@@ -4,7 +4,7 @@ const Doctor = require('../models/doctor');
 // Add Patient Follow Up 
 async function addPatient(body) {
 	const patient = new Patient(body);
-
+	
 	try {
 		const newPatient = await patient.save();
 		return {
@@ -42,6 +42,7 @@ async function updatePatientsList(id, patients = null) {
 		if (patients != null) {
 			const patientList = getAllPatients()
 			patientList.forEach(patient => {
+				if(patient.doctorId == doctor._id)
 				doctor.patients = doctor.patients.push(patient)
 			});
 		}
