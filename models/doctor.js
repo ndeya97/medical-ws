@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Patient = require("./patientFollowUp");
 const  Schema  = mongoose.Schema;
 
 const doctorSchema = new Schema({
@@ -14,7 +15,7 @@ const doctorSchema = new Schema({
 	city: {
 		type: String,
 	},
-	patients: [{idPatient: Number, namePatient: String}],
+	patients: [{type: Number}],
 });
 
 const Doctor = mongoose.model('Doctor', doctorSchema);

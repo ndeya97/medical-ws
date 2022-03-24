@@ -34,17 +34,18 @@ function getAllPatients (req,res) {
 // Update doctor patients list
 async function updatePatientsList(id, patients = null) {
 	let doctor;
+	let patientList = Patient.getAllPatients();
 	try {
 		doctor = await Doctor.findById(id);
 		if (doctor == null) {
 			return { success: false, message: 'Cannot find doctor' };
 		}
 		if (patients != null) {
-			const patientList = getAllPatients()
 			patientList.forEach(patient => {
 				if(patient.doctorId == doctor._id)
 				doctor.patients = doctor.patients.push(patient)
 			});
+			console.log(doctor)
 		}
 
 		try {
@@ -62,8 +63,8 @@ async function updatePatientsList(id, patients = null) {
 	}
 }
 
-
 module.exports = {
 	addPatient,
+	getAllPatients,
 	updatePatientsList
 }

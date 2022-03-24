@@ -1,7 +1,25 @@
 const express = require('express');
 const router = express.Router();
-let { addPatient, updatePatientsList } = require('../controllers/patientController')
+let { getAllPatients, addPatient, updatePatientsList } = require('../controllers/patientController')
 
+
+/**
+ * @swagger
+ * /patients:
+ *   get:
+ *     description: All patients
+ *     responses:
+ *       200:
+ *         description: Returns all the patients
+ */
+ router.get('/', async (req, res) => {
+	let response = await getAllPatients(req,res);
+	if (response.success == true) {
+		res.status(200).json(response);
+	} else {
+		res.status(404).json(response);
+	}
+});
 
 /**
  * @swagger
@@ -15,9 +33,9 @@ let { addPatient, updatePatientsList } = require('../controllers/patientControll
  *          type: object
  *          properties:
  *            patientId:
- *              type: Number
+ *              type: string
  *            doctorId:
- *              type: Number
+ *              type: string
  *     responses:
  *       201:
  *         description: Created
@@ -41,17 +59,17 @@ router.post('/', async (req, res) => {
 
 /**
  * @swagger
- * /patients/{id}:
+ * /doctors/{id}/patients:
  *   put:
  *     parameters:
  *      - in: path
  *        name: id
  *        required: true
  *        type: string
- *        description: The patient ID.
+ *        description: The doctor ID.
  *      - in: body
- *        name: patient
- *        description: Update patient
+ *        name: doctor
+ *        description: Update doctor
  *        schema:
  *          type: object
  *          properties:
@@ -63,17 +81,21 @@ router.post('/', async (req, res) => {
  *              type: string
  *            city:
  *              type: string
- *            patients:
- * 				type: array
+ *           type: object
+ *           propreties:
+ *              patientId:
+ *                type: string
+ *              doctorId:
+ *                type: string
  *     responses:
  *       201:
  *         description: Created
  */
- router.put('/:id', async (req, res) => {
-	let patients;
-	if (req.body.patients) {patients = req.body.patients}
-
-	let response = await updatePatientsList(req.params.id, patienst);
+ router.put('/:id/patients', async (req, res) => {
+	let patients = null ;
+	if (req.body.patients) {patients = req.body.patientId}
+	
+	let response = await updatePatientsList(req.params.id, patients);
 
 	if (response.success == true) {
 		res.status(201).json(response);

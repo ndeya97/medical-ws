@@ -3,10 +3,10 @@ const  Schema  = mongoose.Schema;
 
 const patientFollowUpSchema = new Schema({
 	doctorId: {
-		type: Number,
+		type: String,
 	},
 	patientId: {
-		type: Number,
+		type: String,
 	},
 
 });

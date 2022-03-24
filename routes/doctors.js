@@ -105,7 +105,7 @@ router.post('/', async (req, res) => {
  *              type: string
  *     responses:
  *       201:
- *         description: Created
+ *         description: Updated
  */
 router.put('/:id', async (req, res) => {
 	let doctorName = null, speciality = null, sexe = null, city = null;
