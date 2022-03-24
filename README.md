@@ -1,5 +1,9 @@
 # medical-ws
 
+Premier service Patient (doctolib) par Ihcen Borgi disponible:
+
+[brg-ib](https://github.com/brg-ib/doctolib_app)
+
 In order to start the application, run the following command:
 
 ``` npm run dev ```
