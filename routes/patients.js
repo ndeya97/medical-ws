@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-let { addPatient } = require('../controllers/patientController')
+let { addPatient, updatePatientsList } = require('../controllers/patientController')
 
 
 /**
@@ -36,5 +36,47 @@ router.post('/', async (req, res) => {
 	}
 });
 
+/**
+ * @swagger
+ * /patients/{id}:
+ *   put:
+ *     parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        type: string
+ *        description: The patient ID.
+ *      - in: body
+ *        name: patient
+ *        description: Update patient
+ *        schema:
+ *          type: object
+ *          properties:
+ *            doctorName:
+ *              type: string
+ *            speciality:
+ *              type: string
+ *            sexe:
+ *              type: string
+ *            city:
+ *              type: string
+ *            patients:
+ * 				type: array
+ *     responses:
+ *       201:
+ *         description: Created
+ */
+ router.put('/:id', async (req, res) => {
+	let patients;
+	if (req.body.patients) {patients = req.body.patients}
+
+	let response = await updatePatientsList(req.params.id, patienst);
+
+	if (response.success == true) {
+		res.status(201).json(response);
+	} else {
+		res.status(404).json(response);
+	}
+});
 
 module.exports = router;
